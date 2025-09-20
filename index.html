@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    div.setting {
+      position: absolute;
+      z-index: 999;
+      background-color: #fff;
+      height: 100vh;
+      width: 100%;
+    }
+
+    div.setting.close {
+      display: none;
+    }
+    input.txt {
+      width: 45%;
+    }
+
+    div.wrapper {
+      display: flex;
+    }
+    div.wrapper1 {
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      width: 50%;
+      display: grid;
+    }
+
+    .container {
+      border: dotted;
+    }
+
+    .no1 {
+      background-color: #ffc1cc;
+    }
+
+    .no2 {
+      background-color: #ffdab9;
+    }
+
+    .no3 {
+      background-color: #ffffb3;
+    }
+
+    .no4 {
+      background-color: #b5ead7;
+    }
+
+    .no5 {
+      background-color: #a7d8ff;
+    }
+
+    .no6 {
+      background-color: #e0bbe4;
+    }
+
+    .container.close {
+      background-color: #fff;
+    }
+
+    div.wrapper2 {
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 50%;
+    }
+
+    input.txt {
+      width: 45%;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(2);
+    }
+
+    span.list {
+      margin-left: 5px;
+    }
+
+    div.radius {
+      border-radius: 50%;
+      width: 50%;
+      aspect-ratio: 1/1;
+      background-color: gray;
+      opacity: 0.9;
+      border: #fff dotted 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+      z-index: 900;
+    }
+
+    div.radiusTxt {
+      font-size: 25px;
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+    }
+  </style>
+
+  <body>
+    <div id="setting" class="setting">
+      <h2>終了時間を設定</h2>
+      <input id="hour" type="tel" />時間 <input id="minute" type="tel" />分
+      <input id="second" type="tel" />秒 <button id="start">ボタン</button
+      ><br />
+      <div class="formTodo">
+        <h2>この時間ですること</h2>
+        <h3>
+          <ol>
+            <li><input id="txt1" class="txt" type="text" /></li>
+            <li><input id="txt2" class="txt" type="text" /></li>
+            <li><input id="txt3" class="txt" type="text" /></li>
+            <li><input id="txt4" class="txt" type="text" /></li>
+            <li><input id="txt5" class="txt" type="text" /></li>
+            <li><input id="txt6" class="txt" type="text" /></li>
+            <li><input id="txt7" class="txt" type="text" /></li>
+            <li><input id="txt8" class="txt" type="text" /></li>
+            <li><input id="txt9" class="txt" type="text" /></li>
+            <li><input id="txt10" class="txt" type="text" /></li>
+          </ol>
+        </h3>
+      </div>
+      <button id="countDownBtn">カウントダウンへ</button>
+    </div>
+
+    <div class="countDown" class="countDown">
+      <div class="wrapper">
+        <div id="wrapper1" class="wrapper1">
+          <div id="box1" class="container no1 close"></div>
+          <div id="box2" class="container no2 close"></div>
+          <div id="box3" class="container no3 close"></div>
+          <div id="box4" class="container no4 close"></div>
+          <div id="box5" class="container no5 close"></div>
+          <div id="box6" class="container no6 close"></div>
+        </div>
+        <div class="wrapper2">
+          <h2>この時間にすること</h2>
+          <table height="100">
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list1" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list2" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list3" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list4" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list5" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list6" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list7" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list8" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list9" class="list"></span></th>
+            </tr>
+            <tr>
+              <th><input class="check" type="checkbox" /></th>
+              <th><span id="list10" class="list"></span></th>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="radius">
+        <div class="radiusTxt">
+          残り<br /><span id="cdHour"></span>時間<span id="cdMin"></span>分<span
+            id="cdSecond"
+          ></span
+          >秒
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let time = 0;
+    const start = document.getElementById("start");
+    start.onclick = function () {
+      const setting = document.getElementById("setting");
+      setting.classList.add("close");
+
+      const hour = document.getElementById("hour").value;
+      const min = document.getElementById("minute").value;
+      const second = document.getElementById("second").value;
+
+      const txt1 = document.getElementById("txt1").value;
+      const list1 = document.getElementById("list1");
+      list1.innerHTML = txt1;
+
+      const txt2 = document.getElementById("txt2").value;
+      const list2 = document.getElementById("list2");
+      list2.innerHTML = txt2;
+
+      const txt3 = document.getElementById("txt3").value;
+      const list3 = document.getElementById("list3");
+      list3.innerHTML = txt3;
+
+      const txt4 = document.getElementById("txt4").value;
+      const list4 = document.getElementById("list4");
+      list4.innerHTML = txt4;
+
+      const txt5 = document.getElementById("txt5").value;
+      const list5 = document.getElementById("list5");
+      list5.innerHTML = txt5;
+
+      const txt6 = document.getElementById("txt6").value;
+      const list6 = document.getElementById("list6");
+      list6.innerHTML = txt6;
+
+      const txt7 = document.getElementById("txt7").value;
+      const list7 = document.getElementById("list7");
+      list7.innerHTML = txt7;
+
+      const txt8 = document.getElementById("txt8").value;
+      const list8 = document.getElementById("list8");
+      list8.innerHTML = txt8;
+
+      const txt9 = document.getElementById("txt9").value;
+      const list9 = document.getElementById("list9");
+      list9.innerHTML = txt9;
+
+      const txt10 = document.getElementById("txt10").value;
+      const list10 = document.getElementById("list10");
+      list10.innerHTML = txt10;
+
+      time = hour * 3600 + min * 60 + second * 1;
+      const timeCol = time / 6;
+      console.log(timeCol);
+
+      setInterval(function () {
+        const cdHour = document.getElementById("cdHour");
+        const cdMin = document.getElementById("cdMin");
+        const cdSecond = document.getElementById("cdSecond");
+
+        const hours = Math.floor(time / 60 / 60);
+        const mins = Math.floor(time / 60) % 60;
+        const seconds = Math.floor(time) % 60;
+
+        cdHour.innerHTML = hours < 10 ? "0" + hours : hours;
+        cdMin.innerHTML = mins < 10 ? "0" + mins : mins;
+        cdSecond.innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+        if (time > 0) {
+          time--;
+
+          if (time < timeCol * 5) {
+            document.getElementById("box6").classList.remove("close");
+          }
+          if (time < timeCol * 4) {
+            document.getElementById("box5").classList.remove("close");
+          }
+          if (time < timeCol * 3) {
+            document.getElementById("box4").classList.remove("close");
+          }
+          if (time < timeCol * 2) {
+            document.getElementById("box3").classList.remove("close");
+          }
+          if (time < timeCol * 1) {
+            document.getElementById("box2").classList.remove("close");
+          }
+          if (time == 0) {
+            document.getElementById("box1").classList.remove("close");
+          }
+        }
+      }, 1000);
+    };
+
+    const wrapper1 = document.getElementById("wrapper1");
+    wrapper1.onclick = function () {
+      const setting2 = document.getElementById("setting");
+      setting2.classList.remove("close");
+    };
+
+    const countDownBtn = document.getElementById("countDownBtn");
+    countDownBtn.onclick = function () {
+      const setting = document.getElementById("setting");
+      setting.classList.add("close");
+
+      const txt1 = document.getElementById("txt1").value;
+      const list1 = document.getElementById("list1");
+      list1.innerHTML = txt1;
+
+      const txt2 = document.getElementById("txt2").value;
+      const list2 = document.getElementById("list2");
+      list2.innerHTML = txt2;
+
+      const txt3 = document.getElementById("txt3").value;
+      const list3 = document.getElementById("list3");
+      list3.innerHTML = txt3;
+
+      const txt4 = document.getElementById("txt4").value;
+      const list4 = document.getElementById("list4");
+      list4.innerHTML = txt4;
+
+      const txt5 = document.getElementById("txt5").value;
+      const list5 = document.getElementById("list5");
+      list5.innerHTML = txt5;
+
+      const txt6 = document.getElementById("txt6").value;
+      const list6 = document.getElementById("list6");
+      list6.innerHTML = txt6;
+
+      const txt7 = document.getElementById("txt7").value;
+      const list7 = document.getElementById("list7");
+      list7.innerHTML = txt7;
+
+      const txt8 = document.getElementById("txt8").value;
+      const list8 = document.getElementById("list8");
+      list8.innerHTML = txt8;
+
+      const txt9 = document.getElementById("txt9").value;
+      const list9 = document.getElementById("list9");
+      list9.innerHTML = txt9;
+
+      const txt10 = document.getElementById("txt10").value;
+      const list10 = document.getElementById("list10");
+      list10.innerHTML = txt10;
+    };
+  </script>
+</html>
