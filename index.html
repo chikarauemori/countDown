@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -104,21 +104,55 @@
       z-index: 900;
     }
 
+    div.radius.close {
+      background-color: #ffc1cc !important;
+    }
+
     div.radiusTxt {
       font-size: 25px;
       text-align: center;
       font-family: "Roboto", sans-serif;
     }
+
+    input.timer {
+      font-size: 150%;
+      margin-bottom: 10px;
+      margin-right: 10px;
+    }
+
+    img.todoImg {
+      width: 100%;
+    }
+
+    h2.todoTxt {
+      text-align: center;
+    }
+
+    h2.reset {
+      background-color: lightsalmon;
+      padding: 5px;
+      box-shadow: 5px 5px 5px rgba(0,0,0,0.22);
+      border-radius: 20px;
+    }
   </style>
 
   <body>
     <div id="setting" class="setting">
-      <h2>終了時間を設定</h2>
-      <input id="hour" type="tel" />時間 <input id="minute" type="tel" />分
-      <input id="second" type="tel" />秒 <button id="start">ボタン</button
-      ><br />
+      <h2>作業時間を設定</h2>
+      <input class="timer" id="hour" type="tel" />時間<br />
+      <input class="timer" id="minute" type="tel" />分<br />
+      <input class="timer" id="second" type="tel" />秒
+      <button id="start">スタート</button><br />
+      <h2>終了時間を設定 ⏰</h2>
+      <input class="timer" id="hourTime" type="tel" />時<br />
+      <input class="timer" id="minuteTime" type="tel" />分<br />
+      <input class="timer" id="secondTime" type="tel" />秒
+      <button id="startTime">スタート</button><br />
       <div class="formTodo">
         <h2>この時間ですること</h2>
+        <input type="checkbox" id="check1" /> 作業中
+        <input type="checkbox" id="check2" /> 離席中
+        <input type="checkbox" id="check3" /> 休憩中
         <h3>
           <ol>
             <li><input id="txt1" class="txt" type="text" /></li>
@@ -148,7 +182,8 @@
           <div id="box6" class="container no6 close"></div>
         </div>
         <div class="wrapper2">
-          <h2>この時間にすること</h2>
+          <h2 class="todoTxt">この時間に<br />すること</h2>
+          <img class="todoImg" id="todoImg" />
           <table height="100">
             <tr>
               <th><input class="check" type="checkbox" /></th>
@@ -191,9 +226,10 @@
               <th><span id="list10" class="list"></span></th>
             </tr>
           </table>
+          <h2 id="reset" class="reset">リセット</h2>
         </div>
       </div>
-      <div class="radius">
+      <div class="radius" id="radius">
         <div class="radiusTxt">
           残り<br /><span id="cdHour"></span>時間<span id="cdMin"></span>分<span
             id="cdSecond"
@@ -206,14 +242,8 @@
   <script>
     let time = 0;
     const start = document.getElementById("start");
-    start.onclick = function () {
-      const setting = document.getElementById("setting");
-      setting.classList.add("close");
 
-      const hour = document.getElementById("hour").value;
-      const min = document.getElementById("minute").value;
-      const second = document.getElementById("second").value;
-
+    function todoSet() {
       const txt1 = document.getElementById("txt1").value;
       const list1 = document.getElementById("list1");
       list1.innerHTML = txt1;
@@ -254,11 +284,78 @@
       const list10 = document.getElementById("list10");
       list10.innerHTML = txt10;
 
-      time = hour * 3600 + min * 60 + second * 1;
+      const todoImg = document.getElementById("todoImg");
+
+      if (check1.checked) {
+        todoImg.src = "./img1.png";
+      } else if (check2.checked) {
+        todoImg.src = "./img2.png";
+      } else if (check3.checked) {
+        todoImg.src = "./img3.png";
+      }
+    }
+
+    function countTimer() {
+      const cdHour = document.getElementById("cdHour");
+      const cdMin = document.getElementById("cdMin");
+      const cdSecond = document.getElementById("cdSecond");
+
+      const hours = Math.floor(time / 60 / 60 / 1000);
+      const mins = Math.floor(time / 60 / 1000) % 60;
+      const seconds = Math.floor(time / 1000) % 60;
+
+      cdHour.innerHTML = hours < 10 ? "0" + hours : hours;
+      cdMin.innerHTML = mins < 10 ? "0" + mins : mins;
+      cdSecond.innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+      const radius = document.querySelector(".radius");
+
       const timeCol = time / 6;
       console.log(timeCol);
 
-      setInterval(function () {
+      console.log(hours);
+
+      if (time < timeCol * 5) {
+        document.getElementById("box6").classList.remove("close");
+        radius.style.backgroundColor = "#e0bbe4";
+      }
+      if (time < timeCol * 4) {
+        document.getElementById("box5").classList.remove("close");
+        radius.style.backgroundColor = "#a7d8ff";
+      }
+      if (time < timeCol * 3) {
+        document.getElementById("box4").classList.remove("close");
+        radius.style.backgroundColor = "#b5ead7";
+      }
+      if (time < timeCol * 2) {
+        document.getElementById("box3").classList.remove("close");
+        radius.style.backgroundColor = "#ffffb3";
+      }
+      if (time < timeCol * 1) {
+        document.getElementById("box2").classList.remove("close");
+        radius.style.backgroundColor = "#ffdab9";
+      }
+      if (time == 0) {
+        document.getElementById("box1").classList.remove("close");
+        radius.style.backgroundColor = "#ffc1cc";
+      }
+    }
+
+    start.onclick = function () {
+      const setting = document.getElementById("setting");
+      setting.classList.add("close");
+
+      const hour = document.getElementById("hour").value;
+      const min = document.getElementById("minute").value;
+      const second = document.getElementById("second").value;
+
+      todoSet();
+      time = hour * 3600 + min * 60 + second * 1;
+      const timeCol = time / 6;
+      const radius = document.querySelector(".radius");
+      console.log(timeCol);
+
+      let timer1 = setInterval(function () {
         const cdHour = document.getElementById("cdHour");
         const cdMin = document.getElementById("cdMin");
         const cdSecond = document.getElementById("cdSecond");
@@ -276,24 +373,123 @@
 
           if (time < timeCol * 5) {
             document.getElementById("box6").classList.remove("close");
+            radius.style.backgroundColor = "#e0bbe4";
           }
           if (time < timeCol * 4) {
             document.getElementById("box5").classList.remove("close");
+            radius.style.backgroundColor = "#a7d8ff";
           }
           if (time < timeCol * 3) {
             document.getElementById("box4").classList.remove("close");
+            radius.style.backgroundColor = "#b5ead7";
           }
           if (time < timeCol * 2) {
             document.getElementById("box3").classList.remove("close");
+            radius.style.backgroundColor = "#ffffb3";
           }
           if (time < timeCol * 1) {
             document.getElementById("box2").classList.remove("close");
+            radius.style.backgroundColor = "#ffdab9";
           }
           if (time == 0) {
             document.getElementById("box1").classList.remove("close");
+            radius.style.backgroundColor = "#ffc1cc";
+            clearInterval(timer1);
           }
         }
       }, 1000);
+    };
+
+    startTime.onclick = function () {
+      const setting = document.getElementById("setting");
+      setting.classList.add("close");
+
+      const hourTime = document.getElementById("hourTime").value;
+      const minTime = document.getElementById("minuteTime").value;
+      const secondTime = document.getElementById("secondTime").value;
+
+      todoSet();
+
+      const startTime = new Date();
+      const year = startTime.getFullYear();
+      const month = startTime.getMonth();
+      const day = startTime.getDate();
+      const setTimer = new Date(
+        year,
+        month,
+        day,
+        hourTime,
+        minTime,
+        secondTime
+      );
+      const timeCol = (setTimer - startTime) / 6;
+      console.log(timeCol);
+
+      let timer2 = setInterval(function () {
+        let now = new Date();
+
+        time = (setTimer - now) / 1000;
+
+        const radius2 = document.querySelector(".radius");
+
+        if (time <= 1) {
+          document.getElementById("box1").classList.remove("close");
+          radius2.style.backgroundColor = "#ffc1cc";
+          clearInterval(timer2);
+        }
+
+        console.log(now);
+        console.log(setTimer);
+
+        const cdHour = document.getElementById("cdHour");
+        const cdMin = document.getElementById("cdMin");
+        const cdSecond = document.getElementById("cdSecond");
+
+        const hours = Math.floor(time / 60 / 60);
+        const mins = Math.floor(time / 60) % 60;
+        const seconds = Math.floor(time) % 60;
+
+        cdHour.innerHTML = hours < 10 ? "0" + hours : hours;
+        cdMin.innerHTML = mins < 10 ? "0" + mins : mins;
+        cdSecond.innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+        const radius = document.querySelector(".radius");
+
+        console.log(hours);
+
+        if (time < timeCol * 5) {
+          document.getElementById("box6").classList.remove("close");
+          radius.style.backgroundColor = "#e0bbe4";
+        }
+        if (time < timeCol * 4) {
+          document.getElementById("box5").classList.remove("close");
+          radius.style.backgroundColor = "#a7d8ff";
+        }
+        if (time < timeCol * 3) {
+          document.getElementById("box4").classList.remove("close");
+          radius.style.backgroundColor = "#b5ead7";
+        }
+        if (time < timeCol * 2) {
+          document.getElementById("box3").classList.remove("close");
+          radius.style.backgroundColor = "#ffffb3";
+        }
+        if (time < timeCol * 1) {
+          document.getElementById("box2").classList.remove("close");
+          radius.style.backgroundColor = "#ffdab9";
+        }
+        if (time <= 1) {
+          document.getElementById("box1").classList.remove("close");
+          radius.style.backgroundColor = "#ffc1cc";
+        }
+      }, 1000);
+    };
+
+    const countDownBtn = document.getElementById("countDownBtn");
+    countDownBtn.onclick = function () {
+      const setting = document.getElementById("setting");
+      setting.classList.add("close");
+
+      todoSet();
     };
 
     const wrapper1 = document.getElementById("wrapper1");
@@ -302,50 +498,8 @@
       setting2.classList.remove("close");
     };
 
-    const countDownBtn = document.getElementById("countDownBtn");
-    countDownBtn.onclick = function () {
-      const setting = document.getElementById("setting");
-      setting.classList.add("close");
-
-      const txt1 = document.getElementById("txt1").value;
-      const list1 = document.getElementById("list1");
-      list1.innerHTML = txt1;
-
-      const txt2 = document.getElementById("txt2").value;
-      const list2 = document.getElementById("list2");
-      list2.innerHTML = txt2;
-
-      const txt3 = document.getElementById("txt3").value;
-      const list3 = document.getElementById("list3");
-      list3.innerHTML = txt3;
-
-      const txt4 = document.getElementById("txt4").value;
-      const list4 = document.getElementById("list4");
-      list4.innerHTML = txt4;
-
-      const txt5 = document.getElementById("txt5").value;
-      const list5 = document.getElementById("list5");
-      list5.innerHTML = txt5;
-
-      const txt6 = document.getElementById("txt6").value;
-      const list6 = document.getElementById("list6");
-      list6.innerHTML = txt6;
-
-      const txt7 = document.getElementById("txt7").value;
-      const list7 = document.getElementById("list7");
-      list7.innerHTML = txt7;
-
-      const txt8 = document.getElementById("txt8").value;
-      const list8 = document.getElementById("list8");
-      list8.innerHTML = txt8;
-
-      const txt9 = document.getElementById("txt9").value;
-      const list9 = document.getElementById("list9");
-      list9.innerHTML = txt9;
-
-      const txt10 = document.getElementById("txt10").value;
-      const list10 = document.getElementById("list10");
-      list10.innerHTML = txt10;
-    };
+    document.getElementById('reset').addEventListener('click' , function(){
+      window.location.reload();
+    })
   </script>
 </html>
