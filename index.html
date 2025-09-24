@@ -131,7 +131,7 @@
     h2.reset {
       background-color: lightsalmon;
       padding: 5px;
-      box-shadow: 5px 5px 5px rgba(0,0,0,0.22);
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.22);
       border-radius: 20px;
     }
   </style>
@@ -139,15 +139,26 @@
   <body>
     <div id="setting" class="setting">
       <h2>作業時間を設定</h2>
-      <input class="timer" id="hour" type="tel" />時間<br />
-      <input class="timer" id="minute" type="tel" />分<br />
-      <input class="timer" id="second" type="tel" />秒
+      <input class="timer" id="hour" type="tel" size="2" maxlength="2" />時間
+      <input class="timer" id="minute" type="tel" size="2" maxlength="2" />分
+      <input class="timer" id="second" type="tel" size="2" maxlength="2" />秒
       <button id="start">スタート</button><br />
       <h2>終了時間を設定 ⏰</h2>
-      <input class="timer" id="hourTime" type="tel" />時<br />
-      <input class="timer" id="minuteTime" type="tel" />分<br />
-      <input class="timer" id="secondTime" type="tel" />秒
-      <button id="startTime">スタート</button><br />
+      <input class="timer" id="hourTime" type="tel" size="2" maxlength="2" />時
+      <input
+        class="timer"
+        id="minuteTime"
+        type="tel"
+        size="2"
+        maxlength="2"
+      />分
+      <input
+        class="timer"
+        id="secondTime"
+        type="tel"
+        size="2"
+        maxlength="2"
+      />秒 <button id="startTime">スタート</button><br />
       <div class="formTodo">
         <h2>この時間ですること</h2>
         <input type="checkbox" id="check1" /> 作業中
@@ -422,7 +433,7 @@
         minTime,
         secondTime
       );
-      const timeCol = (setTimer - startTime) / 6;
+      const timeCol = (setTimer - startTime) / 1000 / 6;
       console.log(timeCol);
 
       let timer2 = setInterval(function () {
@@ -498,8 +509,8 @@
       setting2.classList.remove("close");
     };
 
-    document.getElementById('reset').addEventListener('click' , function(){
+    document.getElementById("reset").addEventListener("click", function () {
       window.location.reload();
-    })
+    });
   </script>
 </html>
